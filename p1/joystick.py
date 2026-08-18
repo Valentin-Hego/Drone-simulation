@@ -25,18 +25,20 @@ while running:
 
     # Gestion des événements
     for event in pygame.event.get():
+        #print(event, flush=True)
         if event.type == pygame.QUIT:
             running = False
 
         # Bouton 0 appuyé
-        elif event.type == pygame.JOYBUTTONDOWN:
-            if event.button == 0:
-                tir_actif = True
+        elif event.type == pygame.JOYBUTTONDOWN and event.button == 0:
+            tir_actif = True
+            print("TIR", flush=True)
+
 
         # Bouton 0 relâché
-        elif event.type == pygame.JOYBUTTONUP:
-            if event.button == 0:
-                tir_actif = False
+        elif event.type == pygame.JOYBUTTONUP and event.button == 0:
+            tir_actif = False
+            print("NEUTRE", flush=True)
 
     # Lecture des axes
     axe_0 = joystick.get_axis(0)
@@ -54,68 +56,75 @@ while running:
 
     screen.fill("black")
 
-    # Flèche selon la direction du joystick
-    if axe_0 > SEUIL and axe_1 < -SEUIL:      # Haut droite
-        pygame.draw.polygon(screen, "white",
-            [(335,165), (270,165), (285,180),
-             (240,225), (255,240), (300,195),
-             (315,210)])
-        print("NE", flush=True)
+    ordre_actuel = "NEUTRE"
 
-    elif axe_0 > SEUIL and axe_1 > SEUIL:     # Bas droite
-        pygame.draw.polygon(screen, "white",
-            [(335,235), (315,190), (300,205),
-             (255,160), (240,175), (285,220),
-             (270,235)])
-        print("SE", flush=True)
-
-    elif axe_0 < -SEUIL and axe_1 < -SEUIL:   # Haut gauche
-        pygame.draw.polygon(screen, "white",
-            [(265,165), (330,165), (315,180),
-             (360,225), (345,240), (300,195),
-             (285,210)])
-        print("NO", flush=True)
-
-    elif axe_0 < -SEUIL and axe_1 > SEUIL:    # Bas gauche
-        pygame.draw.polygon(screen, "white",
-            [(265,235), (285,190), (300,205),
-             (345,160), (360,175), (315,220),
-             (330,235)])
-        print("SO", flush=True)
-
-    elif axe_1 < -SEUIL:                      # Haut
-        pygame.draw.polygon(screen, "white",
-            [(300,150), (270,200), (290,200),
-             (290,240), (310,240), (310,200),
-             (330,200)])
-        print("N", flush=True)
-
-    elif axe_1 > SEUIL:                       # Bas
-        pygame.draw.polygon(screen, "white",
-            [(300,250), (270,200), (290,200),
-             (290,160), (310,160), (310,200),
-             (330,200)])
-        print("S", flush=True)
-
-    elif axe_0 > SEUIL:                       # Droite
-        pygame.draw.polygon(screen, "white",
-            [(350,200), (300,170), (300,190),
-             (260,190), (260,210), (300,210),
-             (300,230)])
-        print("E", flush=True)
-
-    elif axe_0 < -SEUIL:                      # Gauche
-        pygame.draw.polygon(screen, "white",
-            [(250,200), (300,170), (300,190),
-             (340,190), (340,210), (300,210),
-             (300,230)])
-        print("O", flush=True)
-
-    # Rectangle rouge affiché tant que le bouton 0 est enfoncé
     if tir_actif:
+        ordre_actuel = "TIR"
         tir.topleft = (x, y)
         pygame.draw.rect(screen, "red", tir)
-        print("tir", flush=True)
+
+    # Flèche selon la direction du joystick
+    else:
+        if axe_0 > SEUIL and axe_1 < -SEUIL:      # NORD-EST
+            pygame.draw.polygon(screen, "white",
+                [(335,165), (270,165), (285,180),
+                (240,225), (255,240), (300,195),
+                (315,210)])
+            ordre_actuel = "NE"
+
+        elif axe_0 > SEUIL and axe_1 > SEUIL:     # SUD-EST
+            pygame.draw.polygon(screen, "white",
+                [(335,235), (315,190), (300,205),
+                (255,160), (240,175), (285,220),
+                (270,235)])
+            ordre_actuel = "SE"
+
+        elif axe_0 < -SEUIL and axe_1 < -SEUIL:   # NORD-OUEST
+            pygame.draw.polygon(screen, "white",
+                [(265,165), (330,165), (315,180),
+                (360,225), (345,240), (300,195),
+                (285,210)])
+            ordre_actuel = "NO"
+
+        elif axe_0 < -SEUIL and axe_1 > SEUIL:    # SUD-OUEST
+            pygame.draw.polygon(screen, "white",
+                [(265,235), (285,190), (300,205),
+                (345,160), (360,175), (315,220),
+                (330,235)])
+            ordre_actuel = "SO"
+
+        elif axe_1 < -SEUIL:                      # NORD
+            pygame.draw.polygon(screen, "white",
+                [(300,150), (270,200), (290,200),
+                (290,240), (310,240), (310,200),
+                (330,200)])
+            ordre_actuel = "N"
+
+        elif axe_1 > SEUIL:                       # SUD
+            pygame.draw.polygon(screen, "white",
+                [(300,250), (270,200), (290,200),
+                (290,160), (310,160), (310,200),
+                (330,200)])
+            ordre_actuel = "S"
+
+        elif axe_0 > SEUIL:                       # EST
+            pygame.draw.polygon(screen, "white",
+                [(350,200), (300,170), (300,190),
+                (260,190), (260,210), (300,210),
+                (300,230)])
+            ordre_actuel = "E"
+
+        elif axe_0 < -SEUIL:                      # OUEST
+            pygame.draw.polygon(screen, "white",
+                [(250,200), (300,170), (300,190),
+                (340,190), (340,210), (300,210),
+                (300,230)])
+            ordre_actuel = "O"
+
+        elif (axe_0 < SEUIL) and (axe_1 < SEUIL): # remise a 0
+            ordre_actuel = "NEUTRE"
+
+    print(ordre_actuel, flush=True)
 
     pygame.display.flip()
     clock.tick(60)
