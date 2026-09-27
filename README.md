@@ -21,3 +21,13 @@ Le projet me permet de découvrir ou approfondire plusieurs domaines qui m'inté
 `ESP32` · `LoRa` · `ELRS` · `C++` · `Python` · `SDR`
 
 On vas simuler le drone et la commande avec des esp32 pour des questions de coûts. 
+
+Avancement actuel : 
+- Après des soucis de livraison, toutes les pieces pour débuter le projet sont arrivées
+- Soudure des modules radios SX1276 aux esp32 effectuée
+- Premier ping radio entre les deux esp effectué avec succès
+
+A suivre :
+- Mettre en place le protocol ELRS pour coller aux standards de communications sans fil dans le monde des drones
+- Achat d'une clé SDR
+- Attaque des communications entre la commande et le drone (brouillage, prise de controle,...)
