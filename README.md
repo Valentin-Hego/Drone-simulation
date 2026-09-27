@@ -2,7 +2,7 @@
 
 **Projet personnel - M2 Cybersécurité | En cours**
 
-Ce projet consiste à simuler la communication entre une **télécommande** et un **drone** à l'aide de deux ESP32 et de modules radio **LoRa SX1276**.
+Ce projet consiste à simuler la communication entre une **télécommande** et un **drone** à l'aide de deux ESP32 et de modules radio **LoRa SX1276** pour ensuite attaquer ce système pour simuler une attaque sur du matériel réel.
 
 L'objectif est de comprendre concrètement comment fonctionne une communication radio embarquée, depuis l'échange de données entre les microcontrôleurs jusqu'au signal radio.
 
@@ -20,4 +20,4 @@ Le projet me permet de découvrir ou approfondire plusieurs domaines qui m'inté
 
 `ESP32` · `LoRa` · `ELRS` · `C++` · `Python` · `SDR`
 
-Etude et simulation sur esp32 pour des questions de coûts. 
+On vas simuler le drone et la commande avec des esp32 pour des questions de coûts. 
